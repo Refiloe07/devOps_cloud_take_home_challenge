@@ -1,0 +1,15 @@
+# .github/workflows/ci.yml — deliverables 4 & 5
+# From the brief:
+#   - On every push: install dependencies, run the tests, build the Docker image
+#   - The pipeline must FAIL when a test fails (prove it with a broken-test commit)
+#
+# TODO: implement the workflow.
+
+name: CI
+
+on:
+  push:
+
+jobs:
+  # TODO: a job that installs dependencies and runs the tests
+  # TODO: a job that builds the Docker image (only if the tests pass)

@@ -1,0 +1,8 @@
+# docker-compose.yml — deliverables 2, 3, 6
+# From the brief:
+#   - Run the app together with a PostgreSQL database
+#   - GET /health must report "database": "connected"
+#   - The DB password must come from an env var / .env (never committed)
+#   - Add a health check that uses the /health endpoint
+#
+# TODO: implement — define services for the app and the db.
