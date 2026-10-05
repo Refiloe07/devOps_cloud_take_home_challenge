@@ -1,15 +1,47 @@
-# .github/workflows/ci.yml — deliverables 4 & 5
-# From the brief:
-#   - On every push: install dependencies, run the tests, build the Docker image
-#   - The pipeline must FAIL when a test fails (prove it with a broken-test commit)
-#
-# TODO: implement the workflow.
-
 name: CI
 
 on:
   push:
+  pull_request:
 
 jobs:
-  # TODO: a job that installs dependencies and runs the tests
-  # TODO: a job that builds the Docker image (only if the tests pass)
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: starter-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: starter-app/requirements-dev.txt
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+      - name: Run tests
+        run: pytest -v
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t twotone-app:${{ github.sha }} .
+
+      - name: Smoke test (compose + /health)
+        run: |
+          # Throwaway password for a container destroyed seconds later.
+          echo "POSTGRES_PASSWORD=$(openssl rand -hex 16)" > .env
+          docker compose up -d --build --wait
+          curl -fsS localhost:8000/health | grep connected
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker compose logs
+
+      - name: Tear down
+        if: always()
+        run: docker compose down -v

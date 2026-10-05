@@ -1,2 +1,14 @@
-# .dockerignore — keeps the image lean (grading: no .git / .env / cache copied in)
-# TODO: list what should NOT go into the image.
+.git
+.github
+.gitignore
+.env
+.env.*
+!.env.example
+**/.venv
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+starter-app/tests
+**/*.md
+docker-compose.yml
+Dockerfile

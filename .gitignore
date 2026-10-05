@@ -1,5 +1,4 @@
-# TODO (deliverable 3): make sure your real secrets file is ignored here.
-
+.env
 __pycache__/
 *.py[cod]
 .pytest_cache/
