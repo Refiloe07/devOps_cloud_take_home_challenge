@@ -36,7 +36,7 @@ pytest
 - [x] 2. docker-compose.yml: app + PostgreSQL; `/health` reports `"database": "connected"`
 - [x] 3. DB password from `.env` (git-ignored); only `.env.example` is committed
 - [x] 4. CI pipeline: on push, install deps, run tests, build image
-- [ ] 5. Pipeline proven to fail on a broken test (red commit, then fix): see the Actions history
+- [x] 5. Pipeline proven to fail on a broken test (red commit, then fix): see the Actions history
 - [x] 6. Health check using `/health` (compose healthcheck + CI smoke test)
 - [x] README: one-command run + deployment plan
 
